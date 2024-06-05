@@ -1,6 +1,6 @@
 package com.eazybytes.cards.Controller;
 
-import com.eazybytes.cards.Consonants.CardsConstants;
+import com.eazybytes.cards.Constants.CardsConstants;
 import com.eazybytes.cards.DTO.CardsDTO;
 import com.eazybytes.cards.DTO.ResponseDTO;
 import com.eazybytes.cards.Service.ICardsService;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.awt.*;
 
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})

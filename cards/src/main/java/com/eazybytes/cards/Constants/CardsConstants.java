@@ -1,4 +1,4 @@
-package com.eazybytes.cards.Consonants;
+package com.eazybytes.cards.Constants;
 
 public final class CardsConstants {
 

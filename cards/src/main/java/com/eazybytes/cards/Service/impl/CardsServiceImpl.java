@@ -1,6 +1,6 @@
 package com.eazybytes.cards.Service.impl;
 
-import com.eazybytes.cards.Consonants.CardsConstants;
+import com.eazybytes.cards.Constants.CardsConstants;
 import com.eazybytes.cards.DTO.CardsDTO;
 import com.eazybytes.cards.Entity.Cards;
 import com.eazybytes.cards.Exception.CardAlreadyExistsException;
