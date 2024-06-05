@@ -31,4 +31,18 @@ public class CardsController {
                 .status(HttpStatus.OK)
                 .body(cardsDTO);
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<ResponseDTO> updateCardDetails(@RequestBody CardsDTO cardsDTO) {
+        boolean isUpdated = iCardsService.updateCard(cardsDTO);
+        if (isUpdated) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDTO(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200));
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(CardsConstants.STATUS_417, CardsConstants.MESSAGE_417_UPDATE));
+        }
+    }
 }

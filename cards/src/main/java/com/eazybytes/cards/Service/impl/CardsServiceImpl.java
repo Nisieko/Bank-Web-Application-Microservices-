@@ -34,8 +34,20 @@ public class CardsServiceImpl implements ICardsService {
         Cards card = cardsRepository.findByMobileNumber(mobileNumber).orElseThrow(
                 () -> new ResourceNotFoundException("Card", "MobileNumber", mobileNumber)
         );
-        CardsDTO cardsDTO = CardsMapper.mapToCardsDTO(card, new CardsDTO());
-        return cardsDTO;
+        return CardsMapper.mapToCardsDTO(card, new CardsDTO());
+    }
+
+    @Override
+    public boolean updateCard(CardsDTO cardsDTO) {
+        boolean isUpdated = false;
+        Cards card = cardsRepository.findByCardNumber(cardsDTO.getCardNumber()).orElseThrow(
+                () -> new ResourceNotFoundException("Card", "Card Number", cardsDTO.getCardNumber())
+        );
+        Cards newCard = CardsMapper.mapToCards(cardsDTO, card);
+        cardsRepository.save(newCard);
+        isUpdated = true;
+
+        return isUpdated;
     }
 
     private Cards createCards(String mobileNumber) {
