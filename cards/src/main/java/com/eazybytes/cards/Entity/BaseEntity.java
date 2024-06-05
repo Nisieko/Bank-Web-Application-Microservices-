@@ -1,4 +1,4 @@
-package com.eazybytes.accounts.Entity;
+package com.eazybytes.cards.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
