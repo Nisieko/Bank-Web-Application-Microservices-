@@ -45,4 +45,18 @@ public class CardsController {
                     .body(new ResponseDTO(CardsConstants.STATUS_417, CardsConstants.MESSAGE_417_UPDATE));
         }
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<ResponseDTO> deleteCardDetails(@RequestParam String mobileNumber) {
+        boolean isDeleted = iCardsService.deleteCard(mobileNumber);
+        if (isDeleted) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDTO(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200));
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(CardsConstants.STATUS_417, CardsConstants.MESSAGE_417_DELETE));
+        }
+    }
 }

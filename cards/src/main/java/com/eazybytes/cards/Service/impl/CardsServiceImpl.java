@@ -50,6 +50,16 @@ public class CardsServiceImpl implements ICardsService {
         return isUpdated;
     }
 
+    @Override
+    public boolean deleteCard(String mobileNumber) {
+        boolean isDeleted = false;
+        Cards card = cardsRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Card", "Mobile Number", mobileNumber)
+        );
+        cardsRepository.deleteById(card.getCardId());
+        return true;
+    }
+
     private Cards createCards(String mobileNumber) {
         Cards newCard = new Cards();
         long randomCardNumber = 100000000000L + new Random().nextInt(900000000);
