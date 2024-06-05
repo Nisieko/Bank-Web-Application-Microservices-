@@ -15,18 +15,16 @@ import java.util.Optional;
 import java.util.Random;
 
 @Service
-@AllArgsConstructor
 public class CardsServiceImpl implements ICardsService {
 
     private CardsRepository cardsRepository;
     @Override
-    public void createCard(CardsDTO cardsDTO) {
-        Cards cards = CardsMapper.mapToCards(cardsDTO, new Cards());
-        Optional<Cards> optionalCards = cardsRepository.findByMobileNumber(cards.getMobileNumber());
+    public void createCard(String mobileNumber) {
+        Optional<Cards> optionalCards = cardsRepository.findByMobileNumber(mobileNumber);
         if (optionalCards.isPresent()) {
-            throw new CardAlreadyExistsException("Card already exists with the given mobile number" + cards.getMobileNumber());
+            throw new CardAlreadyExistsException("Card already exists with the given mobile number" + mobileNumber);
         }
-        cardsRepository.save(createCards(cards.getMobileNumber()));
+        cardsRepository.save(createCards(mobileNumber));
     }
 
     @Override

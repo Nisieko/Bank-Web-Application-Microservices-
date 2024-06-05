@@ -4,7 +4,7 @@ import com.eazybytes.cards.DTO.CardsDTO;
 
 public interface ICardsService {
 
-    void createCard(CardsDTO cardsDTO);
+    void createCard(String mobileNumber);
     CardsDTO fetchCard(String mobileNumber);
 
     boolean updateCard(CardsDTO cardsDTO);
