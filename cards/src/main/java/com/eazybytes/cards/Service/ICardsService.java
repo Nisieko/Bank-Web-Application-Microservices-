@@ -5,4 +5,5 @@ import com.eazybytes.cards.DTO.CardsDTO;
 public interface ICardsService {
 
     void createCard(CardsDTO cardsDTO);
+    CardsDTO fetchCard(String mobileNumber);
 }

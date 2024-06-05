@@ -4,6 +4,7 @@ import com.eazybytes.cards.Constants.CardsConstants;
 import com.eazybytes.cards.DTO.CardsDTO;
 import com.eazybytes.cards.Entity.Cards;
 import com.eazybytes.cards.Exception.CardAlreadyExistsException;
+import com.eazybytes.cards.Exception.ResourceNotFoundException;
 import com.eazybytes.cards.Mapper.CardsMapper;
 import com.eazybytes.cards.Repository.CardsRepository;
 import com.eazybytes.cards.Service.ICardsService;
@@ -28,6 +29,15 @@ public class CardsServiceImpl implements ICardsService {
         cardsRepository.save(createCards(cards.getMobileNumber()));
     }
 
+    @Override
+    public CardsDTO fetchCard(String mobileNumber) {
+        Cards card = cardsRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Card", "MobileNumber", mobileNumber)
+        );
+        CardsDTO cardsDTO = CardsMapper.mapToCardsDTO(card, new CardsDTO());
+        return cardsDTO;
+    }
+
     private Cards createCards(String mobileNumber) {
         Cards newCard = new Cards();
         long randomCardNumber = 100000000000L + new Random().nextInt(900000000);
@@ -40,4 +50,6 @@ public class CardsServiceImpl implements ICardsService {
         return newCard;
 
     }
+
+
 }
