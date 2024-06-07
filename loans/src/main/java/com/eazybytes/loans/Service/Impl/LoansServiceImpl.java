@@ -51,6 +51,17 @@ public class LoansServiceImpl implements ILoansService {
         return isUpdated;
     }
 
+    @Override
+    public boolean deleteLoans(String mobileNumber) {
+        boolean isDeleted = false;
+        Loans loan = loansRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Loans", "Mobile Number", mobileNumber)
+        );
+        loansRepository.deleteById(loan.getLoanId());
+        isDeleted = true;
+        return isDeleted;
+    }
+
     private Loans createNewLoan(String mobileNumber) {
         Loans newLoan = new Loans();
         long randomLoanNumber = 100000000000L + new Random().nextInt(900000000);

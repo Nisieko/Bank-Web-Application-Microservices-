@@ -12,4 +12,6 @@ public interface ILoansService {
     LoansDTO fetchLoans(String mobileNumber);
 
     boolean updateLoans(LoansDTO loansDTO);
+
+    boolean deleteLoans(String mobileNumber);
 }
