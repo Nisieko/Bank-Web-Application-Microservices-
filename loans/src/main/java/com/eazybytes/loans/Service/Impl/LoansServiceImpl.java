@@ -1,8 +1,11 @@
 package com.eazybytes.loans.Service.Impl;
 
 import com.eazybytes.loans.Constants.LoanConstants;
+import com.eazybytes.loans.DTO.LoansDTO;
 import com.eazybytes.loans.Entity.Loans;
 import com.eazybytes.loans.Exception.LoanAlreadyExistsException;
+import com.eazybytes.loans.Exception.ResourceNotFoundException;
+import com.eazybytes.loans.Mapper.LoansMapper;
 import com.eazybytes.loans.Repository.LoansRepository;
 import com.eazybytes.loans.Service.ILoansService;
 import lombok.AllArgsConstructor;
@@ -25,6 +28,15 @@ public class LoansServiceImpl implements ILoansService {
             throw new LoanAlreadyExistsException("Loan already exists with the given mobile number" + mobileNumber);
         }
         loansRepository.save(createNewLoan(mobileNumber));
+    }
+
+    @Override
+    public LoansDTO fetchLoans(String mobileNumber) {
+        Loans loan = loansRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Loans", "Mobile Number", mobileNumber)
+        );
+
+        return LoansMapper.mapToLoansDTO(loan, new LoansDTO());
     }
 
     private Loans createNewLoan(String mobileNumber) {
