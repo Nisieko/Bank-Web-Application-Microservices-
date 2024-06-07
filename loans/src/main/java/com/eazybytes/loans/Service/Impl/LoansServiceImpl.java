@@ -39,6 +39,18 @@ public class LoansServiceImpl implements ILoansService {
         return LoansMapper.mapToLoansDTO(loan, new LoansDTO());
     }
 
+    @Override
+    public boolean updateLoans(LoansDTO loansDTO) {
+        boolean isUpdated = false;
+        Loans loan = loansRepository.findByLoanNumber(loansDTO.getLoanNumber()).orElseThrow(
+                () -> new ResourceNotFoundException("Loans", "Loan Number", loansDTO.getLoanNumber())
+        );
+        LoansMapper.mapToLoans(loansDTO, loan);
+        loansRepository.save(loan);
+        isUpdated = true;
+        return isUpdated;
+    }
+
     private Loans createNewLoan(String mobileNumber) {
         Loans newLoan = new Loans();
         long randomLoanNumber = 100000000000L + new Random().nextInt(900000000);
