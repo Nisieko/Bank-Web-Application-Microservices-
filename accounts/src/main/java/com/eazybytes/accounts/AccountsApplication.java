@@ -20,8 +20,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
                 version = "v1",
                 contact = @Contact(
                         name = "Xuyang",
-                        email = "xxl@gmail.com",
-                        url = "www.snisl"
+                        email = "lxylbznb@gmail.com",
+                        url = "https://github.com/Nisieko"
                 ),
                 license = @License(
                         name = "Apache 2.0",
@@ -31,7 +31,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
         externalDocs = @ExternalDocumentation(
                 description = "EasyBank Accounts microservice REST API Documentation",
-                url = "https://www.ss.com"
+                url = "https://github.com/Nisieko/Bank-Web-Application-Microservices-Spring"
         )
 )
 public class AccountsApplication {

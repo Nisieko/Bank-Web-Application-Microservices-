@@ -12,7 +12,9 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
-
+@Schema(name = "Loans",
+        description = "Schema to hold Loan information"
+)
 @Data
 public class LoansDTO {
     @NotEmpty(message = "Mobile Number can not be a null or empty")
