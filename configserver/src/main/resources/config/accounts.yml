@@ -1,0 +1,12 @@
+build:
+  version: "3.0"
+
+
+accounts:
+  message: "Welcome to EazyBank accounts related local APIs"
+  contactDetails:
+    name: "Xuyang - Developer"
+    email: "xuyang@gmail.com"
+  onCallSupport:
+    - (555)555-1234
+    - (555)555-1235

@@ -1,0 +1,12 @@
+build:
+  version: "1.0"
+
+
+cards:
+  message: "Welcome to EazyBank cards related prod APIs"
+  contactDetails:
+    name: "Samatha - Product Owner"
+    email: "samatha@gmail.com"
+  onCallSupport:
+    - (777)555-1234
+    - (777)555-1235

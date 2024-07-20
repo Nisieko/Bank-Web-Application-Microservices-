@@ -1,0 +1,38 @@
+services:
+  accounts:
+    image: "nisieko/accounts:V2"
+    container_name: accounts-ms
+    ports:
+      - "9080:8080"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - my-network
+  loans:
+    image: "nisieko/loans:V2"
+    container_name: loans-ms
+    ports:
+      - "9070:8090"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - my-network
+  cards:
+    image: "nisieko/cards:V2"
+    container_name: cards-ms
+    ports:
+      - "9060:9000"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
