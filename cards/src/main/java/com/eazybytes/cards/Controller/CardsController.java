@@ -40,6 +40,7 @@ public class CardsController {
     @Autowired
     private Environment environment;
 
+    @Autowired
     private CardsContactInfoDTO cardsContactInfoDTO;
 
     public CardsController(ICardsService iCardsService) {
