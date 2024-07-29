@@ -15,7 +15,7 @@ spring:
     init:
       mode: always
   config:
-    import: "optional:configserver:http://localhost:8071/"
+    import: "configserver:http://localhost:8071/"
   rabbitmq:
     host: "localhost"
     port: 5672
@@ -50,6 +50,6 @@ eureka:
 info:
   app:
     name: "loans"
-    escription: "Eazy Bank application"
+    description: "Eazy Bank application"
     version: "1.0.0"
 # will be displayed on the Eureka dashboard

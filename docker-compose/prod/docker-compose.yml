@@ -1,22 +1,21 @@
 services:
   rabbit:
-    image: rabbitmq:3.10-management
+    image: rabbitmq:3.13-management
     hostname: rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
     healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
+      test: rabbitmq-diagnostics check-port-connectivity
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 5s
-    extends:
-      file: common-config.yml
-      service: network-deploy-service
+    networks:
+      - my-network
 
   configserver:
-    image: "nisieko/configserver:V2"
+    image: "nisieko/configserver:V5"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -29,9 +28,35 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
-    extends:
-      file: common-config.yml
-      service: microservice-base-config
+    environment:
+#      SPRING_PROFILES_ACTIVE: git
+#      SPRING_CONFIG_IMPORT: optional:configserver:http://configserver:8071/
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_RABBITMQ_HOST: "rabbit"
+    networks:
+      - my-network
+
+  eurekaserver:
+    image: "nisieko/eurekaserver:V5"
+    container_name: eurekaserver-ms
+    ports:
+      - "8070:8070"
+    depends_on:
+      - configserver
+#        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    environment:
+      SPRING_APPLICATION_NAME: "eurekaserver"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+    networks:
+      - my-network
 
   accountsdb:
     image: mysql
@@ -57,6 +82,7 @@ services:
 
 
   cardsdb:
+    image: mysql
     container_name: cardsdb
     ports:
       - 3308:3306
@@ -67,7 +93,7 @@ services:
       service: microservice-db-config
 
   accounts:
-    image: "nisieko/accounts:V4"
+    image: "nisieko/accounts:V5"
     container_name: accounts-ms
     ports:
       - "8080:8080"
@@ -79,12 +105,14 @@ services:
         condition: service_healthy
       configserver:
         condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
-      
+      service: microservice-base-config
+
   loans:
-    image: "nisieko/loans:V4"
+    image: "nisieko/loans:V5"
     container_name: loans-ms
     ports:
       - "8090:8090"
@@ -93,15 +121,18 @@ services:
         condition: service_healthy
       configserver:
         condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
     environment:
       SPRING_APPLICATON_NAME: "loans"
       SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3306/loansdb"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-base-config
+
 
   cards:
-    image: "nisieko/cards:V4"
+    image: "nisieko/cards:V5"
     container_name: cards-ms
     ports:
       - "9000:9000"
@@ -110,12 +141,14 @@ services:
         condition: service_healthy
       configserver:
         condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
     environment:
       SPRING_APPLICATON_NAME: "cards"
       SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3306/cardsdb"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-base-config
 
 networks:
   my-network:
