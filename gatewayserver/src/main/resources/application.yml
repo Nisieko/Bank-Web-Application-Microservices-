@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: "gatewayserver"
+  config:
+    import: "configserver:http://localhost:8071/"
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+          # Eureka default: capitalised, with this only lower case can be accepted
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    # default settings
+    username: "guest"
+    password: "guest"
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+
+
+
+info:
+  app:
+    name: "gatewayserver"
+    description: "Eazy Bank Gateway Server application"
+    version: "1.0.0"
+# will be displayed on the Eureka dashboard
+
+logging:
+  level:
+    com:
+      eazybytes:
+        gatewayserver: DEBUG

@@ -27,7 +27,7 @@ public class CustomerServiceImpl implements ICustomersService {
     private LoansFeignClient loansFeignClient;
 
     @Override
-    public CustomerDetailsDTO fetchCustomerDetails(String mobileNumber) {
+    public CustomerDetailsDTO fetchCustomerDetails(String mobileNumber, String correlationId) {
         Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
                 () -> new ResourceNotFoundException("Customer", "MobileNumber", mobileNumber)
         );
@@ -39,11 +39,12 @@ public class CustomerServiceImpl implements ICustomersService {
         CustomerDetailsDTO customerDetailsDTO = CustomerMapper.mapToCustomerDetailsDto(customer, new CustomerDetailsDTO());
         customerDetailsDTO.setAccountsDTO(AccountsMapper.mapToAccountsDto(account, new AccountsDTO()));
 
-        ResponseEntity<LoansDTO> loansDTOResponseEntity = loansFeignClient.fetchLoanDetails(mobileNumber);
+        ResponseEntity<LoansDTO> loansDTOResponseEntity = loansFeignClient.fetchLoanDetails(correlationId, mobileNumber);
 
         customerDetailsDTO.setLoansDTO(loansDTOResponseEntity.getBody());
 
-        ResponseEntity<CardsDTO> cardsDTOResponseEntity = cardsFeignClient.fetchCardDetails(mobileNumber);
+        ResponseEntity<CardsDTO> cardsDTOResponseEntity = cardsFeignClient.fetchCardDetails(correlationId, mobileNumber);
+
         customerDetailsDTO.setCardsDTO(cardsDTOResponseEntity.getBody());
         return customerDetailsDTO;
     }

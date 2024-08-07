@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="eurekaserver" />
+        <module name="gatewayserver" />
         <module name="cards" />
         <module name="accounts" />
         <module name="configserver" />
@@ -20,6 +21,7 @@
       <module name="configserver" target="17" />
       <module name="demo" target="17" />
       <module name="eurekaserver" target="17" />
+      <module name="gatewayserver" target="17" />
       <module name="loans" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -30,6 +32,7 @@
       <module name="configserver" options="-parameters" />
       <module name="demo" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
+      <module name="gatewayserver" options="-parameters" />
       <module name="loans" options="-parameters" />
     </option>
   </component>
