@@ -15,7 +15,7 @@ services:
       - my-network
 
   configserver:
-    image: "nisieko/configserver:V5"
+    image: "nisieko/configserver:V6"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -38,7 +38,7 @@ services:
       - my-network
 
   eurekaserver:
-    image: "nisieko/eurekaserver:V5"
+    image: "nisieko/eurekaserver:V6"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -93,10 +93,16 @@ services:
       service: microservice-db-config
 
   accounts:
-    image: "nisieko/accounts:V5"
+    image: "nisieko/accounts:V6"
     container_name: accounts-ms
     ports:
       - "8080:8080"
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     environment:
       SPRING_APPLICATON_NAME: "accounts"
       SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3306/accountsdb"
@@ -112,10 +118,16 @@ services:
       service: microservice-base-config
 
   loans:
-    image: "nisieko/loans:V5"
+    image: "nisieko/loans:V6"
     container_name: loans-ms
     ports:
       - "8090:8090"
+    healthcheck:
+      test: "curl --fail --silent localhost:8090/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     depends_on:
       loansdb:
         condition: service_healthy
@@ -132,10 +144,16 @@ services:
 
 
   cards:
-    image: "nisieko/cards:V5"
+    image: "nisieko/cards:V6"
     container_name: cards-ms
     ports:
       - "9000:9000"
+    healthcheck:
+      test: "curl --fail --silent localhost:9000/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     depends_on:
       cardsdb:
         condition: service_healthy
@@ -146,6 +164,24 @@ services:
     environment:
       SPRING_APPLICATON_NAME: "cards"
       SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3306/cardsdb"
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+
+  gatewayserver:
+    image: "nisieko/gatewayserver:V6"
+    container_name: gatewayserver-ms
+    ports:
+      - "8072:8072"
+    depends_on:
+      accounts:
+        condition: service_healthy
+      loans:
+        condition: service_healthy
+      cards:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATON_NAME: "gatewayserver"
     extends:
       file: common-config.yml
       service: microservice-base-config

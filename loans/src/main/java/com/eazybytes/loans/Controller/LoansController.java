@@ -105,7 +105,7 @@ public class LoansController {
     )
 
     @GetMapping("/fetch")
-    public ResponseEntity<LoansDTO> fetchLoanDetails(@RequestHeader("eazybank-coorelation-id") String correlationId,
+    public ResponseEntity<LoansDTO> fetchLoanDetails(@RequestHeader("eazybank-correlation-id") String correlationId,
             @RequestParam
                                                          @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile Number must be 10 digits")
                                                          String mobileNumber) {
