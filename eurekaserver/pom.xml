@@ -84,7 +84,7 @@
 				<version>3.3.2</version>
 				<configuration>
 					<to>
-						<image>nisieko/${project.artifactId}:V6</image>
+						<image>nisieko/${project.artifactId}:V7</image>
 					</to>
 				</configuration>
 			</plugin>
