@@ -11,41 +11,18 @@ services:
       file: common-config.yml
       service: network-deploy-service
 
-  rabbit:
-    image: rabbitmq:3.13-management
-    hostname: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    healthcheck:
-      test: rabbitmq-diagnostics check-port-connectivity
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 5s
-    networks:
-      - my-network
 
   configserver:
     image: "nisieko/configserver:V7"
     container_name: configserver-ms
     ports:
       - "8071:8071"
-    depends_on:
-      rabbit:
-        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 10s
-    environment:
-#      SPRING_PROFILES_ACTIVE: git
-#      SPRING_CONFIG_IMPORT: optional:configserver:http://configserver:8071/
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-      SPRING_RABBITMQ_HOST: "rabbit"
     networks:
       - my-network
 
@@ -70,39 +47,6 @@ services:
     networks:
       - my-network
 
-  accountsdb:
-    image: mysql
-    container_name: accountsdb
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_DATABASE: accountsdb
-    extends:
-      file: common-config.yml
-      service: microservice-db-config
-
-  loansdb:
-    image: mysql
-    container_name: loansdb
-    ports:
-      - 3307:3306
-    environment:
-      MYSQL_DATABASE: loansdb
-    extends:
-      file: common-config.yml
-      service: microservice-db-config
-
-
-  cardsdb:
-    image: mysql
-    container_name: cardsdb
-    ports:
-      - 3308:3306
-    environment:
-      MYSQL_DATABASE: cardsdb
-    extends:
-      file: common-config.yml
-      service: microservice-db-config
 
   accounts:
     image: "nisieko/accounts:V7"
@@ -117,10 +61,7 @@ services:
       start_period: 10s
     environment:
       SPRING_APPLICATON_NAME: "accounts"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3306/accountsdb"
     depends_on:
-      accountsdb:
-        condition: service_healthy
       configserver:
         condition: service_healthy
       eurekaserver:
@@ -141,15 +82,12 @@ services:
       retries: 10
       start_period: 10s
     depends_on:
-      loansdb:
-        condition: service_healthy
       configserver:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
     environment:
       SPRING_APPLICATON_NAME: "loans"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3306/loansdb"
     extends:
       file: common-config.yml
       service: microservice-base-config
@@ -167,15 +105,12 @@ services:
       retries: 10
       start_period: 10s
     depends_on:
-      cardsdb:
-        condition: service_healthy
       configserver:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
     environment:
       SPRING_APPLICATON_NAME: "cards"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3306/cardsdb"
     extends:
       file: common-config.yml
       service: microservice-base-config
