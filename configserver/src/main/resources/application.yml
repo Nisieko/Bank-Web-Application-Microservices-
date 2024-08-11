@@ -30,7 +30,14 @@ management:
     health:
       probes:
         enabled: true
+  metrics:
+    tags:
+      application: ${sping.application.name}
 
 
 server:
   port: 8071
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"

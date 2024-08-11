@@ -20,11 +20,7 @@ spring:
     show-sql: true
   config:
     import: "optional:configserver:http://localhost:8071/"
-  rabbitmq:
-    host: "localhost"
-    port: 5672
-    username: "guest"
-    password: "guest"
+
 
 management:
   endpoints:
@@ -42,6 +38,13 @@ management:
     health:
       probes:
         enabled: true
+  info:
+    env:
+      enabled: true
+  metrics:
+    tags:
+      application: ${sping.application.name}
+
 
 endpoints:
   shutdown:
@@ -68,3 +71,5 @@ logging:
     com:
       eazybytes:
         loans: DEBUG
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
