@@ -6,21 +6,21 @@ This project is a backend bank web application developed using microservices arc
 
 ## Features
 
-* Microservices Architecture: The application is designed using microservices, allowing each service to be independently developed, deployed, and scaled.
+* **Microservices Architecture**: The application is designed using microservices, allowing each service to be independently developed, deployed, and scaled.
 
-* Cloud-Native: The application adheres to the 15-factor methodology, ensuring it is robust, scalable, and maintainable in cloud environments.
+* **Cloud-Native**: The application adheres to the 15-factor methodology, ensuring it is robust, scalable, and maintainable in cloud environments.
 
-* Service Discovery: Services are registered and discovered using Spring Eureka Server, facilitating efficient communication between microservices.
+* **Service Discovery**: Services are registered and discovered using Spring Eureka Server, facilitating efficient communication between microservices.
 
-* Configuration Management: Spring Cloud Config Server is used for centralized and dynamic configuration management across all services.
+* **Configuration Management**: Spring Cloud Config Server is used for centralized and dynamic configuration management across all services.
 
-* Resilience: The application is built with resilience in mind using the RESILIENCE4J framework, implementing features like circuit breakers, retries, and fallbacks.
+* **Resilience**: The application is built with resilience in mind using the RESILIENCE4J framework, implementing features like circuit breakers, retries, and fallbacks.
 
-* Observability: The application is monitored using Prometheus, Grafana, Loki, Promtail, and Tempo, providing insights into system performance and helping with troubleshooting.
+* **Observability**: The application is monitored using Prometheus, Grafana, Loki, Promtail, and Tempo, providing insights into system performance and helping with troubleshooting.
 
-* Event-Driven Architecture: The application supports asynchronous communication using RabbitMQ, Kafka, Spring Cloud Functions, and Spring Cloud Stream.
+* **Event-Driven Architecture**: The application supports asynchronous communication using RabbitMQ, Kafka, Spring Cloud Functions, and Spring Cloud Stream.
 
-* Containerization: Each microservice is containerized using Docker, ensuring consistency across development, testing, and production environments.
+* **Containerization**: Each microservice is containerized using Docker, ensuring consistency across development, testing, and production environments.
 
 
 
