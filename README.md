@@ -16,7 +16,7 @@ This project is a backend bank web application developed using microservices arc
 
 * **Resilience**: The application is built with resilience in mind using the RESILIENCE4J framework, implementing features like circuit breakers, retries, and fallbacks.
 
-* **Observability**: The application is monitored using Prometheus, Grafana, Loki, Promtail, and Tempo, providing insights into system performance and helping with troubleshooting.
+* **Observability**: The application is monitored using Prometheus, Grafana, Loki, Alloy, and Tempo, providing insights into system performance and helping with troubleshooting.
 
 * **Event-Driven Architecture**: The application supports asynchronous communication using RabbitMQ, Kafka, Spring Cloud Functions, and Spring Cloud Stream.
 
