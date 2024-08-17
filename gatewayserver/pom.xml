@@ -84,7 +84,6 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -115,7 +114,7 @@
 				<version>3.3.2</version>
 				<configuration>
 					<to>
-						<image>nisieko/${project.artifactId}:V12</image>
+						<image>nisieko/${project.artifactId}:V13</image>
 					</to>
 				</configuration>
 			</plugin>
