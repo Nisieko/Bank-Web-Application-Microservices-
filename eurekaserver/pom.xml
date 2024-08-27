@@ -95,7 +95,7 @@
 				<version>3.3.2</version>
 				<configuration>
 					<to>
-						<image>nisieko/${project.artifactId}:V11</image>
+						<image>nisieko/${project.artifactId}:V12</image>
 					</to>
 				</configuration>
 			</plugin>
