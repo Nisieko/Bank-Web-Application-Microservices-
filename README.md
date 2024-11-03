@@ -1,8 +1,8 @@
 
-# Bank Web Application - Microservices Architecture
+# Banking Microservices
 ## Overview
 
-This project is a backend bank web application developed using microservices architecture. It leverages Spring Boot for building the microservices, Docker for containerization, and Kubernetes for orchestration. The application is designed to be scalable, resilient, and cloud-native, following best practices in modern software development.
+This project is a backing microservices developed using Spring Boot and leverages Docker for containerization, Kubernetes for orchestration. The service is designed to be scalable, resilient, and cloud-native, following best practices in modern software development.
 
 ## Features
 
